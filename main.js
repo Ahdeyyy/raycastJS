@@ -83,7 +83,7 @@ class ray {
 }
 //point in sphere
 function random_in_unit_sphere() {
-  var p;
+  let p;
   do {
     p = vec3.substract(
       new vec3({
@@ -164,7 +164,7 @@ function color(dir, origin) {
     //return new vec3({ x: N.x + 1, y: N.y + 1, z: N.z + 1 }).scale(0.5);
   }
 
-  var unit_direction = vec3.unit_vector(dir);
+  let unit_direction = vec3.unit_vector(dir);
   t = 0.5 * (unit_direction.y + 1);
   return vec3.sum(
     new vec3({ x: 1, y: 1, z: 1 }).scale(1 - t),
@@ -174,27 +174,27 @@ function color(dir, origin) {
 
 const width = 600;
 const height = 300;
-const samples = 100;
+const samples = 10;
 const scaleCol = 255.99;
 
-var lower_left = new vec3({ x: -2, y: -1, z: -1 });
-var horizontal = new vec3({ x: 4, y: 0, z: 0 });
-var vertical = new vec3({ x: 0, y: 2, z: 0 });
-var ori = new vec3({ x: 0.0, y: 0.0, z: 0.0 });
+let lower_left = new vec3({ x: -2, y: -1, z: -1 });
+let horizontal = new vec3({ x: 4, y: 0, z: 0 });
+let vertical = new vec3({ x: 0, y: 2, z: 0 });
+let ori = new vec3({ x: 0.0, y: 0.0, z: 0.0 });
 
 var canvas = document.getElementById("myCanvas");
 var ctx2d = canvas.getContext("2d");
 for (i = 0; i < width; i++) {
   for (j = 0; j < height; j++) {
-    col1 = new vec3({ x: 0, y: 0, z: 0 });
+    let col = new vec3({ x: 0, y: 0, z: 0 });
     for (s = 0; s < samples; s++) {
       u = (i + Math.random() / 256) / width;
       v = (j + Math.random() / 256) / height;
 
       v_sum = vec3.sum(horizontal.scale(u), vertical.scale(v)); //direction
       dir = vec3.sum(lower_left, v_sum); //direction
-
-      col = vec3.sum(col1, color(dir, ori));
+      console.log(col);
+      col = vec3.sum(col, color(dir, ori));
       //col1 = vec3.sum(col,col1);
     }
     col.scale(1 / s);
